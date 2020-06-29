@@ -98,7 +98,7 @@ public class TacticsMove : MonoBehaviour
 
     public void MoveToTile(Tile tile)
     {
-        path.Clear();
+         path.Clear();
          tile.target = true;
          moving = true;
 
