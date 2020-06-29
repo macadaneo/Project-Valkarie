@@ -28,19 +28,19 @@ public class Tile : MonoBehaviour
     {
         if (current)
         {
-            GetComponent<Renderer>().material.color = Color.white;
+            GetComponent<Renderer>().material.color = new Color(0f, 0f, 0.67f);
         }
         else if (target)
         {
-            GetComponent<Renderer>().material.color = Color.cyan;
+            GetComponent<Renderer>().material.color = new Color(0f, 0.78f, 1f);
         }
         else if (selectable)
         {
-            GetComponent<Renderer>().material.color = Color.blue;
+            GetComponent<Renderer>().material.color = new Color(0.2f, 0.39f, 1f);
         }
         else
         {
-            GetComponent<Renderer>().material.color = Color.clear;
+            GetComponent<Renderer>().material.color = Color.white;
         }
     }
 
@@ -78,7 +78,7 @@ public class Tile : MonoBehaviour
             {
                 RaycastHit hit;
 
-                if (Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1))
+                if (!Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1))
                 {
                     adjacencyList.Add(tile);
                 }
