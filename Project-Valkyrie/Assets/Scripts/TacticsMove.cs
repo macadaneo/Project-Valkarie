@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class TacticsMove : MonoBehaviour
 {
-    public bool turn = false;
-    
     List<Tile> selectableTiles = new List<Tile>();
     private GameObject[] tiles;
     
@@ -23,7 +21,8 @@ public class TacticsMove : MonoBehaviour
     private Vector3 velocity = new Vector3();
     private Vector3 heading = new Vector3();
     private Vector3 jumpTarget;
-    
+
+    public bool turn = false;
     public bool moving = false;
     private bool fallingDown = false;
     private bool jumpingUp = false;
@@ -37,7 +36,7 @@ public class TacticsMove : MonoBehaviour
 
         halfHeight = GetComponent<Collider>().bounds.extents.y;
 
-        //TurnManager.AddUnit(this);
+        TurnManager.AddUnit(this);
 
     }
 
@@ -108,16 +107,16 @@ public class TacticsMove : MonoBehaviour
 
     public void MoveToTile(Tile tile)
     {
-         path.Clear();
-         tile.target = true;
-         moving = true;
+        path.Clear();
+        tile.target = true;
+        moving = true;
 
-         Tile next = tile;
-         while (next != null)
-         {
-             path.Push(next);
-             next = next.parent;
-         }
+        Tile next = tile;
+        while (next != null)
+        {
+            path.Push(next);
+            next = next.parent;
+        }
     }
 
     public void Move()
@@ -160,7 +159,8 @@ public class TacticsMove : MonoBehaviour
             RemoveSelectableTiles();
             moving = false;
 
-            //TurnManager.EndTurn();
+            TurnManager.EndTurn();
+            // ^^ TurnManager.EndTurn() ^^ should be moved to the attack/action script when created.
         }
     }
 
@@ -284,4 +284,16 @@ public class TacticsMove : MonoBehaviour
             velocity.y = 1.5f;
         }
     }
+
+    public void BeginTurn()
+    {
+        turn = true;
+    }
+
+    public void EndTurn()
+    {
+        turn = false;
+    }
+    
+    
 }
