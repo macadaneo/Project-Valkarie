@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCMove : TacticsMove
+public class NPCMove : TacticsMove 
 {
-    // Start is called before the first frame update
-    void Start()
+    GameObject target;
+
+    // Use this for initialization
+    void Start () 
     {
         Init();
     }
-
+	
     // Update is called once per frame
-    void Update()
+    void Update () 
     {
         Debug.DrawRay(transform.position, transform.forward);
-        
+
         if (!turn)
         {
             return;
         }
-        
+
         if (!moving)
         {
             FindNearestTarget();
-            CaculatePath();
+            CalculatePath();
             FindSelectableTiles();
+            actualTargetTile.target = true;
         }
         else
         {
@@ -35,5 +38,27 @@ public class NPCMove : TacticsMove
     void CalculatePath()
     {
         Tile targetTile = GetTargetTile(target);
+        FindPath(targetTile);
+    }
+
+    void FindNearestTarget()
+    {
+        GameObject[] targets = GameObject.FindGameObjectsWithTag("Player");
+
+        GameObject nearest = null;
+        float distance = Mathf.Infinity;
+
+        foreach (GameObject obj in targets)
+        {
+            float d = Vector3.Distance(transform.position, obj.transform.position);
+
+            if (d < distance)
+            {
+                distance = d;
+                nearest = obj;
+            }
+        }
+
+        target = nearest;
     }
 }
